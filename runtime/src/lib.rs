@@ -57,6 +57,7 @@ pub type Nonce = u64;
 
 /// Used for the module template in `./template.rs`
 mod template;
+mod atest;
 
 /// Opaque types. These are used by the CLI to instantiate machinery that don't need to know
 /// the specifics of the runtime. They can then be made to be agnostic over specific formats
@@ -192,6 +193,10 @@ impl template::Trait for Runtime {
 	type Event = Event;
 }
 
+impl atest::Trait for Runtime {
+	type Event = Event;
+}
+
 construct_runtime!(
 	pub enum Runtime with Log(InternalLog: DigestItem<Hash, AuthorityId, AuthoritySignature>) where
 		Block = Block,
@@ -207,6 +212,8 @@ construct_runtime!(
 		Sudo: sudo,
 		// Used for the module template in `./template.rs`
 		TemplateModule: template::{Module, Call, Storage, Event<T>},
+
+		AtestModule: atest::{Module, Call, Storage, Event<T>},
 	}
 );
 
